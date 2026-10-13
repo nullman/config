@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #===============================================================================
-# brightness
+# set-x11-brightness
 #
 # Modify screen brightness up or down using xrandr.
 #

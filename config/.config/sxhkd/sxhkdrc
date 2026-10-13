@@ -8,6 +8,7 @@
 #   bwmenu
 #   light
 #   mpc
+#   pactl
 #   pamixer
 #   qdbus
 #   rofi
@@ -18,6 +19,8 @@
 #   xrandr
 #   xvkbd
 #   yad
+#   ~/bin/set-x11-brightness
+#   ~/bin/touchpad-toggle
 #
 # To specify a key, you can use 'xbindkeys --key' or 'xbindkeys --multikey'
 # and put one of the two lines in this file. Or use 'xev -event keyboard' to
@@ -134,23 +137,39 @@ XF86Display
 
 # toggle touchpad
 XF86TouchpadToggle
-    touchpad-toggle && notify-send --expire-time=3000 --replace-id=1 'Toggle Touchpad'
+    ${HOME}/bin/touchpad-toggle && notify-send --expire-time=3000 --replace-id=1 'Toggle Touchpad'
 
-# # play audio
-# XF86AudioPlay
-#     playerctl play && notify-send --expire-time=3000 --replace-id=2 'Play Audio'
+# play audio
+XF86AudioPlay
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control player play"; \
+    else \
+        ${HOME}/bin/music-control player play; \
+    fi
 
-# # pause audio
-# XF86AudioPause
-#     playerctl pause && notify-send --expire-time=3000 --replace-id=2 'Pause Audio'
+# pause audio
+XF86AudioPause
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control player pause"; \
+    else \
+        ${HOME}/bin/music-control player pause; \
+    fi
 
-# # play next
-# XF86AudioNext
-#     playerctl next && notify-send --expire-time=3000 --replace-id=2 'Play Next'
+# play next
+XF86AudioNext
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control player next"; \
+    else \
+        ${HOME}/bin/music-control player next; \
+    fi
 
-# # play previous
-# XF86AudioPrev
-#     playerctl previous && notify-send --expire-time=3000 --replace-id=2 'Play Previous'
+# play previous
+XF86AudioPrev
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control player previous"; \
+    else \
+        ${HOME}/bin/music-control player previous; \
+    fi
 
 #-------------------------------------------------------------------------------
 # Wooting Lekker Keyboard Media Keys
@@ -166,11 +185,11 @@ super + Pause
 
 # volume up
 super + Home
-    ${HOME}/bin/system-setting volume up
+    ${HOME}/bin/system-setting volume down
 
 # volume down
 super + Prior
-    ${HOME}/bin/system-setting volume down
+    ${HOME}/bin/system-setting volume up
 
 # toggle mute
 super + Insert
@@ -178,26 +197,26 @@ super + Insert
 
 # mpc: play previous
 super + Delete
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc prev && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
-    else
-        mpc prev && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control mpc prev"; \
+    else \
+        ${HOME}/bin/music-control mpd prev; \
     fi
 
 # mpc: toggle play/pause
 super + End
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc toggle && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
-    else
-        mpc toggle && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control mpd toggle"; \
+    else \
+        ${HOME}/bin/music-control mpd toggle; \
     fi
 
 # mpc: play next
 super + Next
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc next && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
-    else
-        mpc next && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control mpd next"; \
+    else \
+        ${HOME}/bin/music-control mpd next; \
     fi
 
 #-------------------------------------------------------------------------------
@@ -226,10 +245,10 @@ super + alt + ctrl + Insert
 
 # test volume
 super + alt + ctrl + Delete
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "ffplay -nodisp -autoexit \"${HOME}/sounds/bottles.wav\""
-    else
-        ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "ffplay -nodisp -autoexit \"\${HOME}/sounds/bottles.wav\""; \
+    else \
+        ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"; \
     fi
 
 #-------------------------------------------------------------------------------
@@ -249,139 +268,139 @@ super + {h, shift + slash}
 # qubes os app menu
 #super + ctrl + Escape
 super + q
-    if [ "$(uname -n)" == "dom0" ]; then
-        gdbus call --session --dest org.qubesos.appmenu --object-path '/org/qubesos/appmenu' --method org.freedesktop.Application.Activate '{}'
+    if [ "$(uname -n)" == "dom0" ]; then \
+        gdbus call --session --dest org.qubesos.appmenu --object-path '/org/qubesos/appmenu' --method org.freedesktop.Application.Activate '{}'; \
     fi
 
 # desktop application launcher [dom0]
 super + ctrl + space
-    if [ "$(uname -n)" == "dom0" ]; then
-        ${HOME}/bin/rofi-qubes-drun
+    if [ "$(uname -n)" == "dom0" ]; then \
+        ${HOME}/bin/rofi-qubes-drun; \
     fi
 
 # desktop application launcher
 super + alt + space
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "rofi -normal-window -modi drun -show drun"
-    else
-        rofi -normal-window -modi drun -show drun
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "rofi -normal-window -modi drun -show drun"; \
+    else \
+        rofi -normal-window -modi drun -show drun; \
     fi
 
 # program launcher [dom0]
 super + ctrl + d
-    if [ "$(uname -n)" == "dom0" ]; then
-        rofi -normal-window -modi run -show run
+    if [ "$(uname -n)" == "dom0" ]; then \
+        rofi -normal-window -modi run -show run; \
     fi
 
 # program launcher
 super + d
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "rofi -normal-window -modi run -show run"
-    else
-        rofi -normal-window -modi run -show run
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "rofi -normal-window -modi run -show run"; \
+    else \
+        rofi -normal-window -modi run -show run; \
     fi
 
 # application group launcher
 super + a
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/application-launcher"
-    else
-        ${HOME}/bin/application-launcher
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/application-launcher"; \
+    else \
+        ${HOME}/bin/application-launcher; \
     fi
 
 # menu launcher
 super + Return
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/rofi-menu"
-    else
-        ${HOME}/bin/rofi-menu
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-menu"; \
+    else \
+        ${HOME}/bin/rofi-menu; \
     fi
 
 # window selector [dom0]
 super + ctrl + w
-    if [ "$(uname -n)" == "dom0" ]; then
-        rofi -normal-window -modi window -show window
+    if [ "$(uname -n)" == "dom0" ]; then \
+        rofi -normal-window -modi window -show window; \
     fi
 
 # window selector
 super + w
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "rofi -normal-window -modi window -show window"
-    else
-        rofi -normal-window -modi window -show window
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "rofi -normal-window -modi window -show window"; \
+    else \
+        rofi -normal-window -modi window -show window; \
     fi
 
 # clipmenu selector
 super + c
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "CM_LAUNCHER=rofi clipmenu"
-    else
-        CM_LAUNCHER=rofi clipmenu
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "CM_LAUNCHER=rofi clipmenu"; \
+    else \
+        CM_LAUNCHER=rofi clipmenu; \
     fi
 
 # emoji selector
 super + e
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/usr/sbin/rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"
-    else
-        rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral
-        #rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "/usr/sbin/rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral"; \
+    else \
+        rofimoji --typer xdotool --clipboarder xsel --skin-tone neutral; \
     fi
+    #rofimoji --action print --skin-tone neutral | tr -d '\n' | xsel && xsel --output | xsel --clipboard; \
 
 # unicode selector
 super + u
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/rofi-menu unicode"
-    else
-        ${HOME}/bin/rofi-menu unicode
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-menu unicode"; \
+    else \
+        ${HOME}/bin/rofi-menu unicode; \
     fi
 
 # footnote symbol selector
 super + shift + u
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/rofi-menu footnotes"
-    else
-        ${HOME}/bin/rofi-menu footnotes
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-menu footnotes"; \
+    else \
+        ${HOME}/bin/rofi-menu footnotes; \
     fi
 
 # bookmarks selector
 super + o
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/rofi-menu bookmarks"
-    else
-        ${HOME}/bin/rofi-menu bookmarks
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-menu bookmarks"; \
+    else \
+        ${HOME}/bin/rofi-menu bookmarks; \
     fi
 
 # bookmarks keyword selector
 super + shift + o
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/rofi-menu bookmarks-keyword"
-    else
-        ${HOME}/bin/rofi-menu bookmarks-keyword
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-menu bookmarks-keyword"; \
+    else \
+        ${HOME}/bin/rofi-menu bookmarks-keyword; \
     fi
 
 # typer selector
 super + semicolon
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/rofi-typer"
-    else
-        ${HOME}/bin/rofi-typer
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-typer"; \
+    else \
+        ${HOME}/bin/rofi-typer; \
     fi
 
 # paste selector
 super + apostrophe
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/rofi-menu paste"
-    else
-        ${HOME}/bin/rofi-menu paste
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-menu paste"; \
+    else \
+        ${HOME}/bin/rofi-menu paste; \
     fi
 
 # spell and define word
 super + s
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/rofi-menu spell"
-    else
-        ${HOME}/bin/rofi-menu spell
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-menu spell"; \
+    else \
+        ${HOME}/bin/rofi-menu spell; \
     fi
 
 # # bitwarden selector (clear clipboard after 60 seconds)
@@ -391,10 +410,10 @@ super + s
 
 # generate password
 super + p
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/home/user/bin/rofi-menu password"
-    else
-        ${HOME}/bin/rofi-menu password
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-menu password"; \
+    else \
+        ${HOME}/bin/rofi-menu password; \
     fi && notify-send --expire-time=3000 'Random password phrase on clipboard'
 
 # display time
@@ -404,26 +423,26 @@ super + backslash
 
 # # edit with emacs
 # super + e
-#     if [ "$(uname -n)" == "dom0" ]; then
-#         qvm-run personal "/usr/sbin/emacsclient --eval '(emacs-everywhere)'"
-#     else
-#         emacsclient --eval '(emacs-everywhere)'
+#     if [ "$(uname -n)" == "dom0" ]; then \
+#         qvm-run personal "/usr/sbin/emacsclient --eval '(emacs-everywhere)'"; \
+#     else \
+#         emacsclient --eval '(emacs-everywhere)'; \
 #     fi
 
 # git synchronize config
 super + y
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "source '/home/user/.funct' && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
-    else
-        source "${HOME}/.funct" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "source '\${HOME}/.funct' && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; \
+    else \
+        source "${HOME}/.funct" && (git-sync-config && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null; \
     fi
 
 # git synchronize extra
 super + shift + y
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "source '/home/user/.funct' && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"
-    else
-        source "${HOME}/.funct" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "source '\${HOME}/.funct' && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; \
+    else \
+        source "${HOME}/.funct" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null; \
     fi
 
 # start screen saver
@@ -449,34 +468,34 @@ super + shift + p
 # kill process clicked
 super + shift + Delete
     notify-send --expire-time=3000 "Click window to kill" && \
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "xkill"
-    else
-        xkill
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "xkill"; \
+    else \
+        xkill; \
     fi
 
 # snapshot of entire screen
 super + alt + Print
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "scrot --exec 'mv $f ~/Pictures/'"
-    else
-        scrot --exec 'mv $f ~/Pictures/'
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "scrot --exec 'mv $f ~/Pictures/'"; \
+    else \
+        scrot --exec 'mv $f ~/Pictures/'; \
     fi && notify-send --expire-time=3000 'Screen snapshot saved'
 
 # snapshot of active window
 super + ctrl + Print
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "scrot --focused --exec 'mv $f ~/Pictures/'"
-    else
-        scrot --focused --exec 'mv $f ~/Pictures/'
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "scrot --focused --exec 'mv $f ~/Pictures/'"; \
+    else \
+        scrot --focused --exec 'mv $f ~/Pictures/'; \
     fi && notify-send --expire-time=3000 'Window snapshot saved'
 
 # snapshot of selected region
 super + shift + Print
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "scrot --select --freeze --exec 'mv $f ~/Pictures/'"
-    else
-        scrot --select --freeze --exec 'mv $f ~/Pictures/'
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "scrot --select --freeze --exec 'mv $f ~/Pictures/'"; \
+    else \
+        scrot --select --freeze --exec 'mv $f ~/Pictures/'; \
     fi && notify-send --expire-time=3000 'Region snapshot saved'
 
 # reload sxhkd
@@ -516,45 +535,45 @@ super + shift + r
 
 # request new tor circuit [sys-whonix]
 super + shift + t
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run sys-whonix "tor-ctrl signal NEWNYM && notify-send --expire-time=3000 'Requesting new tor circuit'"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run sys-whonix "tor-ctrl signal NEWNYM && notify-send --expire-time=3000 'Requesting new tor circuit'"; \
     fi
 
 # set X11 caps-lock, insert key, keyboard, and mouse speed [dom0]
 super + shift + backslash
     ${HOME}/bin/set-x11-settings && notify-send --expire-time=3000 'X11 settings applied'
 
-# connect to sennheiser hd350bt headphones
+# connect to headphones
 super + b
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "bluetoothctl power on; bluetoothctl connect 80:C3:BA:0E:CB:E5"
-    else
-        bluetoothctl power on; bluetoothctl connect 80:C3:BA:0E:CB:E5
-    fi && notify-send --expire-time=3000 'Connecting to Sennheiser HD 350BT Headphones'
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/system-setting connect headphones"; \
+    else \
+        ${HOME}/bin/system-setting connect headphones; \
+    fi
 
-# disconnect from sennheiser hd350bt headphones
+# disconnect from headphones
 super + shift + b
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "bluetoothctl disconnect 80:C3:BA:0E:CB:E5; bluetoothctl power off"
-    else
-        bluetoothctl disconnect 80:C3:BA:0E:CB:E5; bluetoothctl power off
-    fi && notify-send --expire-time=3000 'Disconnecting from Sennheiser HD 350BT Headphones'
+    if [ "$(uname -n)" == "dom0" ]; then \
+    qvm-run personal "\${HOME}/bin/system-setting disconnect headphones"; \
+    else \
+        ${HOME}/bin/system-setting disconnect headphones; \
+    fi
 
-# connect to powerbeats pro headphones
+# connect to earbuds
 super + n
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "bluetoothctl power on; bluetoothctl connect 14:1A:97:05:81:4C"
-    else
-        bluetoothctl power on; bluetoothctl connect 14:1A:97:05:81:4C
-    fi && notify-send --expire-time=3000 'Connecting to Powerbeats Pro Headphones'
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/system-setting connect earbuds"; \
+    else \
+        ${HOME}/bin/system-setting connect earbuds; \
+    fi
 
-# disconnect from powerbeats pro headphones
+# disconnect from earbuds
 super + shift + n
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "bluetoothctl disconnect 14:1A:97:05:81:4C; bluetoothctl power off"
-    else
-        bluetoothctl disconnect 14:1A:97:05:81:4C; bluetoothctl power off
-    fi && notify-send --expire-time=3000 'Disconnecting from Powerbeats Pro Headphones'
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/system-setting disconnect earbuds"; \
+    else \
+        ${HOME}/bin/system-setting disconnect earbuds; \
+    fi
 
 # # nixos-rebuild switch
 # super + shift + r
@@ -566,74 +585,74 @@ super + shift + n
 
 # mpc: select item to play
 super + m
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "${HOME}/bin/rofi-menu mpd"
-    else
-        ${HOME}/bin/rofi-menu mpd
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/rofi-menu mpd"; \
+    else \
+        ${HOME}/bin/rofi-menu mpd; \
     fi
 
 # mpc: toggle play/pause
 super + alt + ctrl + m
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc toggle && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
-    else
-        mpc toggle && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control mpd toggle"; \
+    else \
+        ${HOME}/bin/music-control mpd toggle; \
     fi
 
 # mpc: play previous
 super + alt + ctrl + comma
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc prev"
-    else
-        mpc prev && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control mpd prev"; \
+    else \
+        ${HOME}/bin/music-control mpd prev; \
     fi
 
 # mpc: play next
 super + alt + ctrl + period
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc next"
-    else
-        mpc next && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control mpd next"; \
+    else \
+        ${HOME}/bin/music-control mpd next; \
     fi
 
-# mpc: display audio
+# mpc: display status
 super + alt + ctrl + slash
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
-    else
-        notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-control mpd status"; \
+    else \
+        ${HOME}/bin/music-control mpd status; \
     fi
 
 # mpc: play previous
 XF86AudioPrev
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc prev"
-    else
-        mpc prev && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-cotrol mpc prev"; \
+    else \
+        ${HOME}/bin/music-cotrol mpc prev; \
     fi
 
 # mpc: toggle play/pause
 XF86AudioPlay
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc toggle && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
-    else
-        mpc toggle && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-cotrol mpc toggle"; \
+    else \
+        ${HOME}/bin/music-cotrol mpc toggle; \
     fi
 
 # mpc: stop
 XF86AudioStop
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc stop && notify-send --app-name=mpd --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/mpd-playing --notify-title)\" \"\$(\${HOME}/bin/mpd-playing --notify-body)\""
-    else
-        mpc stop && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-cotrol mpc stop"; \
+    else \
+        ${HOME}/bin/music-cotrol mpc stop; \
     fi
 
 # mpc: play next
 XF86AudioNext
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "mpc next"
-    else
-        mpc next && notify-send --app-name=mpd --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/mpd-playing --notify-title)" "$(${HOME}/bin/mpd-playing --notify-body)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-cotrol mpc next"; \
+    else \
+        ${HOME}/bin/music-cotrol mpc next; \
     fi
 
 #-------------------------------------------------------------------------------
@@ -642,106 +661,106 @@ XF86AudioNext
 
 # # spotify: play previous
 # super + alt + ctrl + a
-#     if [ "$(uname -n)" == "dom0" ]; then
-#         qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-#     else
-#         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+#     if [ "$(uname -n)" == "dom0" ]; then \
+#         qvm-run personal "\${HOME}/bin/music-cotrol spotify prev"; \
+#     else \
+#         ${HOME}/bin/music-cotrol spotify prev; \
 #     fi
 
 # # spotify: toggle play/pause
 # super + alt + ctrl + s
-#     if [ "$(uname -n)" == "dom0" ]; then
-#         qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-#     else
-#         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+#     if [ "$(uname -n)" == "dom0" ]; then \
+#         qvm-run personal "\${HOME}/bin/music-cotrol spotify toggle"; \
+#     else \
+#         ${HOME}/bin/music-cotrol spotify toggle; \
 #     fi
 
 # # spotify: stop
 # super + alt + ctrl + d
-#     if [ "$(uname -n)" == "dom0" ]; then
-#         qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-#     else
-#         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+#     if [ "$(uname -n)" == "dom0" ]; then \
+#         qvm-run personal "\${HOME}/bin/music-cotrol spotify stop"; \
+#     else \
+#         ${HOME}/bin/music-cotrol spotify stop; \
 #     fi
 
 # # spotify: play next
 # super + alt + ctrl + f
-#     if [ "$(uname -n)" == "dom0" ]; then
-#         qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-#     else
-#         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+#     if [ "$(uname -n)" == "dom0" ]; then \
+#         qvm-run personal "\${HOME}/bin/music-cotrol spotify next"; \
+#     else \
+#         ${HOME}/bin/music-cotrol spotify next; \
 #     fi
 
 # # spotify: play previous
 # XF86AudioPrevious
-#     if [ "$(uname -n)" == "dom0" ]; then
-#         qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-#     else
-#         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+#     if [ "$(uname -n)" == "dom0" ]; then \
+#         qvm-run personal "\${HOME}/bin/music-cotrol spotify prev"; \
+#     else \
+#         ${HOME}/bin/music-cotrol spotify prev; \
 #     fi
 
 # # spotify: toggle play/pause
 # XF86AudioPlay
-#     if [ "$(uname -n)" == "dom0" ]; then
-#         qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-#     else
-#         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+#     if [ "$(uname -n)" == "dom0" ]; then \
+#         qvm-run personal "\${HOME}/bin/music-cotrol spotify toggle"; \
+#     else \
+#         ${HOME}/bin/music-cotrol spotify toggle; \
 #     fi
 
 # # spotify: stop
 # XF86AudioStop
-#     if [ "$(uname -n)" == "dom0" ]; then
-#         qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-#     else
-#         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+#     if [ "$(uname -n)" == "dom0" ]; then \
+#         qvm-run personal "\${HOME}/bin/music-cotrol spotify stop"; \
+#     else \
+#         ${HOME}/bin/music-cotrol spotify stop; \
 #     fi
 
 # # spotify: play next
 # XF86AudioNext
-#     if [ "$(uname -n)" == "dom0" ]; then
-#         qvm-run personal "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-#     else
-#         dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+#     if [ "$(uname -n)" == "dom0" ]; then \
+#         qvm-run personal "\${HOME}/bin/music-cotrol spotify next"; \
+#     else \
+#         ${HOME}/bin/music-cotrol spotify next; \
 #     fi
 
 # spotify: play previous
 super + alt + ctrl + z
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-    else
-        qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-cotrol spotify prev"; \
+    else \
+        ${HOME}/bin/music-cotrol spotify prev; \
     fi
 
 # spotify: toggle play/pause
 super + alt + ctrl + c
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-    else
-        qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-cotrol spotify toggle"; \
+    else \
+        ${HOME}/bin/music-cotrol spotify toggle; \
     fi
 
 # spotify: stop
 super + alt + ctrl + x
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-    else
-        qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-cotrol spotify stop"; \
+    else \
+        ${HOME}/bin/music-cotrol spotify stop; \
     fi
 
 # spotify: play next
 super + alt + ctrl + b
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-    else
-        qdbus org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next && notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-cotrol spotify next"; \
+    else \
+        ${HOME}/bin/music-cotrol spotify next \
     fi
 
-# spotify: display audio
+# spotify: display status
 super + alt + ctrl + apostrophe
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "notify-send --app-name=spotify --expire-time=3000 \$([ \"\${XDG_SESSION_TYPE}\" == \"wayland\" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png \"\$(\${HOME}/bin/spotify-playing)\""
-    else
-        notify-send --app-name=spotify --expire-time=3000 $([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2') --icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png "$(${HOME}/bin/spotify-playing)"
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "\${HOME}/bin/music-cotrol spotify status"; \
+    else \
+        ${HOME}/bin/music-cotrol spotify status; \
     fi
 
 #-------------------------------------------------------------------------------
@@ -750,16 +769,16 @@ super + alt + ctrl + apostrophe
 
 # launch terminal [dom0]
 super + ctrl + t
-    if [ "$(uname -n)" == "dom0" ]; then
-        alacritty
+    if [ "$(uname -n)" == "dom0" ]; then \
+        alacritty; \
     fi
 
 # launch terminal
 super + alt + t
-    if [ "$(uname -n)" == "dom0" ]; then
-        qvm-run personal "/usr/sbin/alacritty"
-    else
-        alacritty
+    if [ "$(uname -n)" == "dom0" ]; then \
+        qvm-run personal "/usr/sbin/alacritty"; \
+    else \
+        alacritty; \
     fi
 
 #===============================================================================

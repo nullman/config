@@ -2,9 +2,9 @@
 #===============================================================================
 # system-setting
 #
-# Modify system volume or brightness.
+# Change volume, brightness, display, and bluetooth settings.
 #
-# Dependencies: xrandr bc (pamixer|pactl) [light]
+# Dependencies: notify-send xrandr bc (pamixer|pactl) [light]
 #
 # Author: Kyle W T Sherman <kylewsherman@gmail.com>
 #===============================================================================
@@ -12,7 +12,7 @@
 REPLACE_ID=$([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=1')
 EXPIRE_TIME="--expire-time=3000"        # 3 seconds
 
-if [ "$(uname -n)" == "dom0" ]; then
+if ! _command light; then
     DISP=$(xrandr -q | sed -n 's/^\(.*\) connected primary .*$/\1/p')
 fi
 
@@ -29,7 +29,7 @@ _run() {
 if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     echo "Usage: $(basename \"$0\") SETTING CHANGE"
     echo "Make a CHANGE to a system SETTING."
-    echo "Examples:"
+    echo "Options:"
     echo "  volume up"
     echo "  volume down"
     echo "  volume mute"
@@ -56,15 +56,18 @@ notify-send-volume() {
 
     case $1 in
         mute)
-            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --icon="volume-$1" "Muted"
+            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} \
+                 --icon="volume-$1" "Muted"
            ;;
 
         unmute)
-            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --hint=int:value:"${volume}" --icon="volume-$1" "Unmuted"
+            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} \
+                 --hint=int:value:"${volume}" --icon="volume-$1" "Unmuted"
            ;;
 
         *)
-            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --hint=int:value:"${volume}" --icon="volume-$1" "Volume $1"
+            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} \
+                 --hint=int:value:"${volume}" --icon="volume-$1" "Volume $1"
            ;;
     esac
 }
@@ -73,10 +76,11 @@ notify-send-brightness() {
     if _command light; then
         local brightness=$(light -G | sed 's/\.[0-9]*$//')
     else
-        local brightness=$(printf '%s * 50\n' "$(${HOME}/bin/brightness ${DISP} +0 | sed -n 's/^Brightness: //p')" | bc | sed 's/\.[0-9]*$//')
+        local brightness=$(printf '%s * 50\n' "$(${HOME}/bin/set-x11-brightness ${DISP} +0 | sed -n 's/^Brightness: //p')" | bc | sed 's/\.[0-9]*$//')
     fi
 
-    _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} --hint=int:value:"${brightness}" --icon="brightness-$1" "Brightness $1"
+    _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} \
+         --hint=int:value:"${brightness}" --icon="brightness-$1" "Brightness $1"
 }
 
 case $1 in
@@ -164,12 +168,12 @@ case $1 in
         else
             case $2 in
                 up)
-                    ${HOME}/bin/brightness ${DISP} +0.2
+                    ${HOME}/bin/set-x11-brightness ${DISP} +0.2
                     notify-send-brightness $2
                     ;;
 
                 down)
-                    ${HOME}/bin/brightness ${DISP} -0.2
+                    ${HOME}/bin/set-x11-brightness ${DISP} -0.2
                     notify-send-brightness $2
                     ;;
             esac
@@ -191,87 +195,43 @@ case $1 in
         ;;
 
     bluetooth)
-        if [ "$(uname -n)" != "dom0" ]; then
-            case $2 in
-                on)
-                    _run notify-send ${EXPIRE_TIME} "Bluetooth On"
-                    bluetoothctl power on
-                    ;;
+        case $2 in
+            on)
+                bluetoothctl power on
+                ;;
 
-                off)
-                    _run notify-send ${EXPIRE_TIME} "Bluetooth Off"
-                    bluetoothctl power off
-                    ;;
+            off)
+                bluetoothctl power off
+                ;;
 
-                connect)
-                    case $3 in
-                        headphones)
-                            _run notify-send ${EXPIRE_TIME} "Connecting to Sennheiser HD 350BT Headphones"
+            connect)
+                case $3 in
+                    headphones)
+                        bluetoothctl power on; \
                             bluetoothctl connect 80:C3:BA:0E:CB:E5
-                            ;;
+                        ;;
 
-                        earbuds)
-                            _run notify-send ${EXPIRE_TIME} "Connecting to Sennheiser Momentum TW 4 Earbuds"
+                    earbuds)
+                        bluetoothctl power on; \
                             bluetoothctl connect 80:C3:BA:89:8B:E9
-                            ;;
-                    esac
-                    ;;
+                        ;;
+                esac
+                ;;
 
-                disconnect)
-                    case $3 in
-                        headphones)
-                            _run notify-send ${EXPIRE_TIME} "Disconnecting from Sennheiser HD 350BT Headphones"
-                            bluetoothctl disconnect 80:C3:BA:0E:CB:E5
-                            ;;
+            disconnect)
+                case $3 in
+                    headphones)
+                        bluetoothctl disconnect 80:C3:BA:0E:CB:E5; \
+                            bluetoothctl power off
+                        ;;
 
-                        earbuds)
-                            _run notify-send ${EXPIRE_TIME} "Disconnecting from Sennheiser Momentum TW 4 Earbuds"
-                            bluetoothctl disconnect 80:C3:BA:89:8B:E9
-                            ;;
-                    esac
-                    ;;
-            esac
-        else
-            case $2 in
-                on)
-                    _run notify-send ${EXPIRE_TIME} "Bluetooth On"
-                    qvm-run personal "bluetoothctl power on"
-                    ;;
-
-                off)
-                    _run notify-send ${EXPIRE_TIME} "Bluetooth Off"
-                    qvm-run personal "bluetoothctl power off"
-                    ;;
-
-                connect)
-                    case $3 in
-                        headphones)
-                            _run notify-send ${EXPIRE_TIME} "Connecting to Sennheiser HD 350BT Headphones"
-                            qvm-run personal "bluetoothctl connect 80:C3:BA:0E:CB:E5"
-                            ;;
-
-                        earbuds)
-                            _run notify-send ${EXPIRE_TIME} "Connecting to Sennheiser Momentum TW 4 Earbuds"
-                            qvm-run personal "bluetoothctl connect 80:C3:BA:89:8B:E9"
-                            ;;
-                    esac
-                    ;;
-
-                disconnect)
-                    case $3 in
-                        headphones)
-                            _run notify-send ${EXPIRE_TIME} "Disconnecting from Sennheiser HD 350BT Headphones"
-                            qvm-run personal "bluetoothctl disconnect 80:C3:BA:0E:CB:E5"
-                            ;;
-
-                        earbuds)
-                            _run notify-send ${EXPIRE_TIME} "Disconnecting from Sennheiser Momentum TW 4 Earbuds"
-                            qvm-run personal "bluetoothctl disconnect 80:C3:BA:89:8B:E9"
-                            ;;
-                    esac
-                    ;;
-            esac
-        fi
+                    earbuds)
+                        bluetoothctl disconnect 80:C3:BA:89:8B:E9; \
+                            bluetoothctl power off
+                        ;;
+                esac
+                ;;
+        esac
         ;;
 esac
 

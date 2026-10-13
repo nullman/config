@@ -147,12 +147,12 @@ super + shift + {Up,Down,i,k}
     bspc node --to-desktop {prev,next,prev,next}.local --follow
 
 # focus next/previous monitor
-super + {Prior,Next}
-    bspc monitor --focus {prev,next}
+super + ctrl + {Left,Right,j,l}
+    bspc monitor --focus {prev,next,prev,next}
 
 # send focused node to next/previous monitor
-super + shift + {Prior,Next}
-    bspc node --to-monitor {prev,next} --follow
+super + ctrl + shift + {Left,Right,j,l}
+    bspc node --to-monitor {prev,next,prev,next} --follow
 
 #-------------------------------------------------------------------------------
 # Move and Resize

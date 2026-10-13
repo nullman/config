@@ -1,0 +1,204 @@
+#!/usr/bin/env bash
+#===============================================================================
+# music-control
+#
+# Control playerctl (mpris), mpd (Music Player Daemon), and Spotify.
+#
+# Dependencies: notify-send playerctl mpd mpc
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+REPLACE_ID=$([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=2')
+EXPIRE_TIME="--expire-time=3000"        # 3 seconds
+ICON="--icon=/usr/share/icons/gnome/48x48/mimetypes/audio-x-generic.png"
+
+# check if executable command is found in the path
+_command() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# run executable command if found in the path
+_run() {
+    command -v "$1" >/dev/null 2>&1 && "$@"
+}
+
+if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+    echo "Usage: $(basename \"$0\") SERVICE COMMAND"
+    echo "Send a COMMAND to a music SERVICE."
+    echo "Options:"
+    echo "  player play"
+    echo "  player pause"
+    echo "  player toggle"
+    echo "  player stop"
+    echo "  player prev"
+    echo "  player next"
+    echo "  player status"
+    echo "  mpd play"
+    echo "  mpd pause"
+    echo "  mpd toggle"
+    echo "  mpd stop"
+    echo "  mpd prev"
+    echo "  mpd next"
+    echo "  mpd status"
+    echo "  spotify play"
+    echo "  spotify pause"
+    echo "  spotify toggle"
+    echo "  spotify stop"
+    echo "  spotify prev"
+    echo "  spotify next"
+    echo "  spotify status"
+    exit 1
+fi
+
+notify-playerctl() {
+    notify-send --app-name=playerctl ${EXPIRE_TIME} ${REPLACE_ID} ${ICON} \
+                "$(playerctl status)"
+}
+
+notify-mpd() {
+    notify-send --app-name=mpd ${EXPIRE_TIME} ${REPLACE_ID} ${ICON} \
+                "$(${HOME}/bin/mpd-playing --notify-title)" \
+                "$(${HOME}/bin/mpd-playing --notify-body)"
+}
+
+notify-spotify() {
+    notify-send --app-name=spotify ${EXPIRE_TIME} ${REPLACE_ID} ${ICON} \
+                "$(${HOME}/bin/spotify-playing)"
+}
+
+case $1 in
+    player)
+        case $2 in
+            play)
+                playerctl play
+                notify-playerctl
+                ;;
+
+            pause)
+                playerctl pause
+                notify-playerctl
+                ;;
+
+            toggle)
+                playerctl play-pause
+                notify-playerctl
+                ;;
+
+            stop)
+                playerctl stop
+                notify-playerctl
+                ;;
+
+            prev)
+                playerctl previous
+                notify-playerctl
+                ;;
+
+            next)
+                playerctl next
+                notify-playerctl
+                ;;
+
+            status)
+                notify-playerctl
+                ;;
+        esac
+        ;;
+
+    mpd)
+        case $2 in
+            play)
+                mpc play
+                notify-mpd
+                ;;
+
+            pause)
+                mpc pause
+                notify-mpd
+                ;;
+
+            toggle)
+                mpc toggle
+                notify-mpd
+                ;;
+
+            stop)
+                mpc stop
+                notify-mpd
+                ;;
+
+            prev)
+                mpc prev
+                ;;
+
+            next)
+                mpc next
+                ;;
+
+            status)
+                notify-mpd
+                ;;
+        esac
+        ;;
+
+    spotify)
+        case $2 in
+            play)
+                dbus-send --print-reply \
+                          --dest=org.mpris.MediaPlayer2.spotify \
+                          /org/mpris/MediaPlayer2 \
+                          org.mpris.MediaPlayer2.Player.Play
+                notify-spotify
+                ;;
+
+            pause)
+                dbus-send --print-reply \
+                          --dest=org.mpris.MediaPlayer2.spotify \
+                          /org/mpris/MediaPlayer2 \
+                          org.mpris.MediaPlayer2.Player.Pause
+                notify-spotify
+                ;;
+
+            toggle)
+                dbus-send --print-reply \
+                          --dest=org.mpris.MediaPlayer2.spotify \
+                          /org/mpris/MediaPlayer2 \
+                          org.mpris.MediaPlayer2.Player.PlayPause
+                notify-spotify
+                ;;
+
+            stop)
+                dbus-send --print-reply \
+                          --dest=org.mpris.MediaPlayer2.spotify \
+                          /org/mpris/MediaPlayer2 \
+                          org.mpris.MediaPlayer2.Player.Stop
+                notify-spotify
+                ;;
+
+            prev)
+                dbus-send --print-reply \
+                          --dest=org.mpris.MediaPlayer2.spotify \
+                          /org/mpris/MediaPlayer2 \
+                          org.mpris.MediaPlayer2.Player.Previous
+                notify-spotify
+                ;;
+
+            next)
+                dbus-send --print-reply \
+                          --dest=org.mpris.MediaPlayer2.spotify \
+                          /org/mpris/MediaPlayer2 \
+                          org.mpris.MediaPlayer2.Player.Next
+                notify-spotify
+                ;;
+
+            status)
+                notify-spotify
+                ;;
+        esac
+        ;;
+esac
+
+#===============================================================================
+# End of File
+#===============================================================================
