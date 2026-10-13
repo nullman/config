@@ -142,7 +142,7 @@ XF86TouchpadToggle
 # play audio
 XF86AudioPlay
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control player play"; \
+        qvm-run personal "${HOME}/bin/music-control player play"; \
     else \
         ${HOME}/bin/music-control player play; \
     fi
@@ -150,7 +150,7 @@ XF86AudioPlay
 # pause audio
 XF86AudioPause
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control player pause"; \
+        qvm-run personal "${HOME}/bin/music-control player pause"; \
     else \
         ${HOME}/bin/music-control player pause; \
     fi
@@ -158,7 +158,7 @@ XF86AudioPause
 # play next
 XF86AudioNext
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control player next"; \
+        qvm-run personal "${HOME}/bin/music-control player next"; \
     else \
         ${HOME}/bin/music-control player next; \
     fi
@@ -166,7 +166,7 @@ XF86AudioNext
 # play previous
 XF86AudioPrev
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control player previous"; \
+        qvm-run personal "${HOME}/bin/music-control player previous"; \
     else \
         ${HOME}/bin/music-control player previous; \
     fi
@@ -198,7 +198,7 @@ super + Insert
 # mpc: play previous
 super + Delete
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control mpc prev"; \
+        qvm-run personal "${HOME}/bin/music-control mpc prev"; \
     else \
         ${HOME}/bin/music-control mpd prev; \
     fi
@@ -206,7 +206,7 @@ super + Delete
 # mpc: toggle play/pause
 super + End
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control mpd toggle"; \
+        qvm-run personal "${HOME}/bin/music-control mpd toggle"; \
     else \
         ${HOME}/bin/music-control mpd toggle; \
     fi
@@ -214,7 +214,7 @@ super + End
 # mpc: play next
 super + Next
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control mpd next"; \
+        qvm-run personal "${HOME}/bin/music-control mpd next"; \
     else \
         ${HOME}/bin/music-control mpd next; \
     fi
@@ -246,7 +246,7 @@ super + alt + ctrl + Insert
 # test volume
 super + alt + ctrl + Delete
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "ffplay -nodisp -autoexit \"\${HOME}/sounds/bottles.wav\""; \
+        qvm-run personal "ffplay -nodisp -autoexit \"${HOME}/sounds/bottles.wav\""; \
     else \
         ffplay -nodisp -autoexit "${HOME}/sounds/bottles.wav"; \
     fi
@@ -303,7 +303,7 @@ super + d
 # application group launcher
 super + a
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/application-launcher"; \
+        qvm-run personal "${HOME}/bin/application-launcher"; \
     else \
         ${HOME}/bin/application-launcher; \
     fi
@@ -311,7 +311,7 @@ super + a
 # menu launcher
 super + Return
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-menu"; \
+        qvm-run personal "${HOME}/bin/rofi-menu"; \
     else \
         ${HOME}/bin/rofi-menu; \
     fi
@@ -351,7 +351,7 @@ super + e
 # unicode selector
 super + u
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-menu unicode"; \
+        qvm-run personal "${HOME}/bin/rofi-menu unicode"; \
     else \
         ${HOME}/bin/rofi-menu unicode; \
     fi
@@ -359,7 +359,7 @@ super + u
 # footnote symbol selector
 super + shift + u
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-menu footnotes"; \
+        qvm-run personal "${HOME}/bin/rofi-menu footnotes"; \
     else \
         ${HOME}/bin/rofi-menu footnotes; \
     fi
@@ -367,7 +367,7 @@ super + shift + u
 # bookmarks selector
 super + o
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-menu bookmarks"; \
+        qvm-run personal "${HOME}/bin/rofi-menu bookmarks"; \
     else \
         ${HOME}/bin/rofi-menu bookmarks; \
     fi
@@ -375,7 +375,7 @@ super + o
 # bookmarks keyword selector
 super + shift + o
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-menu bookmarks-keyword"; \
+        qvm-run personal "${HOME}/bin/rofi-menu bookmarks-keyword"; \
     else \
         ${HOME}/bin/rofi-menu bookmarks-keyword; \
     fi
@@ -383,7 +383,7 @@ super + shift + o
 # typer selector
 super + semicolon
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-typer"; \
+        qvm-run personal "${HOME}/bin/rofi-typer"; \
     else \
         ${HOME}/bin/rofi-typer; \
     fi
@@ -391,7 +391,7 @@ super + semicolon
 # paste selector
 super + apostrophe
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-menu paste"; \
+        qvm-run personal "${HOME}/bin/rofi-menu paste"; \
     else \
         ${HOME}/bin/rofi-menu paste; \
     fi
@@ -399,7 +399,7 @@ super + apostrophe
 # spell and define word
 super + s
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-menu spell"; \
+        qvm-run personal "${HOME}/bin/rofi-menu spell"; \
     else \
         ${HOME}/bin/rofi-menu spell; \
     fi
@@ -412,7 +412,7 @@ super + s
 # generate password
 super + p
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-menu password"; \
+        qvm-run personal "${HOME}/bin/rofi-menu password"; \
     else \
         ${HOME}/bin/rofi-menu password; \
     fi
@@ -442,7 +442,7 @@ super + y
 # git synchronize extra
 super + shift + y
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "source '\${HOME}/.funct' && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; \
+        qvm-run personal "source '${HOME}/.funct' && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null"; \
     else \
         source "${HOME}/.funct" && (git-sync-extra && echo 'Done') 2>&1 | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null; \
     fi
@@ -548,7 +548,7 @@ super + shift + backslash
 # connect to headphones
 super + b
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/system-setting connect headphones"; \
+        qvm-run personal "${HOME}/bin/system-setting connect headphones"; \
     else \
         ${HOME}/bin/system-setting connect headphones; \
     fi
@@ -556,7 +556,7 @@ super + b
 # disconnect from headphones
 super + shift + b
     if [ "$(uname -n)" == "dom0" ]; then \
-    qvm-run personal "\${HOME}/bin/system-setting disconnect headphones"; \
+    qvm-run personal "${HOME}/bin/system-setting disconnect headphones"; \
     else \
         ${HOME}/bin/system-setting disconnect headphones; \
     fi
@@ -564,7 +564,7 @@ super + shift + b
 # connect to earbuds
 super + n
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/system-setting connect earbuds"; \
+        qvm-run personal "${HOME}/bin/system-setting connect earbuds"; \
     else \
         ${HOME}/bin/system-setting connect earbuds; \
     fi
@@ -572,7 +572,7 @@ super + n
 # disconnect from earbuds
 super + shift + n
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/system-setting disconnect earbuds"; \
+        qvm-run personal "${HOME}/bin/system-setting disconnect earbuds"; \
     else \
         ${HOME}/bin/system-setting disconnect earbuds; \
     fi
@@ -588,7 +588,7 @@ super + shift + n
 # mpc: select item to play
 super + m
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/rofi-menu mpd"; \
+        qvm-run personal "${HOME}/bin/rofi-menu mpd"; \
     else \
         ${HOME}/bin/rofi-menu mpd; \
     fi
@@ -596,7 +596,7 @@ super + m
 # mpc: toggle play/pause
 super + alt + ctrl + m
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control mpd toggle"; \
+        qvm-run personal "${HOME}/bin/music-control mpd toggle"; \
     else \
         ${HOME}/bin/music-control mpd toggle; \
     fi
@@ -604,7 +604,7 @@ super + alt + ctrl + m
 # mpc: play previous
 super + alt + ctrl + comma
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control mpd prev"; \
+        qvm-run personal "${HOME}/bin/music-control mpd prev"; \
     else \
         ${HOME}/bin/music-control mpd prev; \
     fi
@@ -612,7 +612,7 @@ super + alt + ctrl + comma
 # mpc: play next
 super + alt + ctrl + period
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control mpd next"; \
+        qvm-run personal "${HOME}/bin/music-control mpd next"; \
     else \
         ${HOME}/bin/music-control mpd next; \
     fi
@@ -620,7 +620,7 @@ super + alt + ctrl + period
 # mpc: display status
 super + alt + ctrl + slash
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-control mpd status"; \
+        qvm-run personal "${HOME}/bin/music-control mpd status"; \
     else \
         ${HOME}/bin/music-control mpd status; \
     fi
@@ -628,7 +628,7 @@ super + alt + ctrl + slash
 # mpc: play previous
 XF86AudioPrev
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-cotrol mpc prev"; \
+        qvm-run personal "${HOME}/bin/music-cotrol mpc prev"; \
     else \
         ${HOME}/bin/music-cotrol mpc prev; \
     fi
@@ -636,7 +636,7 @@ XF86AudioPrev
 # mpc: toggle play/pause
 XF86AudioPlay
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-cotrol mpc toggle"; \
+        qvm-run personal "${HOME}/bin/music-cotrol mpc toggle"; \
     else \
         ${HOME}/bin/music-cotrol mpc toggle; \
     fi
@@ -644,7 +644,7 @@ XF86AudioPlay
 # mpc: stop
 XF86AudioStop
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-cotrol mpc stop"; \
+        qvm-run personal "${HOME}/bin/music-cotrol mpc stop"; \
     else \
         ${HOME}/bin/music-cotrol mpc stop; \
     fi
@@ -652,7 +652,7 @@ XF86AudioStop
 # mpc: play next
 XF86AudioNext
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-cotrol mpc next"; \
+        qvm-run personal "${HOME}/bin/music-cotrol mpc next"; \
     else \
         ${HOME}/bin/music-cotrol mpc next; \
     fi
@@ -664,7 +664,7 @@ XF86AudioNext
 # # spotify: play previous
 # super + alt + ctrl + a
 #     if [ "$(uname -n)" == "dom0" ]; then \
-#         qvm-run personal "\${HOME}/bin/music-cotrol spotify prev"; \
+#         qvm-run personal "${HOME}/bin/music-cotrol spotify prev"; \
 #     else \
 #         ${HOME}/bin/music-cotrol spotify prev; \
 #     fi
@@ -672,7 +672,7 @@ XF86AudioNext
 # # spotify: toggle play/pause
 # super + alt + ctrl + s
 #     if [ "$(uname -n)" == "dom0" ]; then \
-#         qvm-run personal "\${HOME}/bin/music-cotrol spotify toggle"; \
+#         qvm-run personal "${HOME}/bin/music-cotrol spotify toggle"; \
 #     else \
 #         ${HOME}/bin/music-cotrol spotify toggle; \
 #     fi
@@ -680,7 +680,7 @@ XF86AudioNext
 # # spotify: stop
 # super + alt + ctrl + d
 #     if [ "$(uname -n)" == "dom0" ]; then \
-#         qvm-run personal "\${HOME}/bin/music-cotrol spotify stop"; \
+#         qvm-run personal "${HOME}/bin/music-cotrol spotify stop"; \
 #     else \
 #         ${HOME}/bin/music-cotrol spotify stop; \
 #     fi
@@ -688,7 +688,7 @@ XF86AudioNext
 # # spotify: play next
 # super + alt + ctrl + f
 #     if [ "$(uname -n)" == "dom0" ]; then \
-#         qvm-run personal "\${HOME}/bin/music-cotrol spotify next"; \
+#         qvm-run personal "${HOME}/bin/music-cotrol spotify next"; \
 #     else \
 #         ${HOME}/bin/music-cotrol spotify next; \
 #     fi
@@ -696,7 +696,7 @@ XF86AudioNext
 # # spotify: play previous
 # XF86AudioPrevious
 #     if [ "$(uname -n)" == "dom0" ]; then \
-#         qvm-run personal "\${HOME}/bin/music-cotrol spotify prev"; \
+#         qvm-run personal "${HOME}/bin/music-cotrol spotify prev"; \
 #     else \
 #         ${HOME}/bin/music-cotrol spotify prev; \
 #     fi
@@ -704,7 +704,7 @@ XF86AudioNext
 # # spotify: toggle play/pause
 # XF86AudioPlay
 #     if [ "$(uname -n)" == "dom0" ]; then \
-#         qvm-run personal "\${HOME}/bin/music-cotrol spotify toggle"; \
+#         qvm-run personal "${HOME}/bin/music-cotrol spotify toggle"; \
 #     else \
 #         ${HOME}/bin/music-cotrol spotify toggle; \
 #     fi
@@ -712,7 +712,7 @@ XF86AudioNext
 # # spotify: stop
 # XF86AudioStop
 #     if [ "$(uname -n)" == "dom0" ]; then \
-#         qvm-run personal "\${HOME}/bin/music-cotrol spotify stop"; \
+#         qvm-run personal "${HOME}/bin/music-cotrol spotify stop"; \
 #     else \
 #         ${HOME}/bin/music-cotrol spotify stop; \
 #     fi
@@ -720,7 +720,7 @@ XF86AudioNext
 # # spotify: play next
 # XF86AudioNext
 #     if [ "$(uname -n)" == "dom0" ]; then \
-#         qvm-run personal "\${HOME}/bin/music-cotrol spotify next"; \
+#         qvm-run personal "${HOME}/bin/music-cotrol spotify next"; \
 #     else \
 #         ${HOME}/bin/music-cotrol spotify next; \
 #     fi
@@ -728,7 +728,7 @@ XF86AudioNext
 # spotify: play previous
 super + alt + ctrl + z
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-cotrol spotify prev"; \
+        qvm-run personal "${HOME}/bin/music-cotrol spotify prev"; \
     else \
         ${HOME}/bin/music-cotrol spotify prev; \
     fi
@@ -736,7 +736,7 @@ super + alt + ctrl + z
 # spotify: toggle play/pause
 super + alt + ctrl + c
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-cotrol spotify toggle"; \
+        qvm-run personal "${HOME}/bin/music-cotrol spotify toggle"; \
     else \
         ${HOME}/bin/music-cotrol spotify toggle; \
     fi
@@ -744,7 +744,7 @@ super + alt + ctrl + c
 # spotify: stop
 super + alt + ctrl + x
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-cotrol spotify stop"; \
+        qvm-run personal "${HOME}/bin/music-cotrol spotify stop"; \
     else \
         ${HOME}/bin/music-cotrol spotify stop; \
     fi
@@ -752,7 +752,7 @@ super + alt + ctrl + x
 # spotify: play next
 super + alt + ctrl + b
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-cotrol spotify next"; \
+        qvm-run personal "${HOME}/bin/music-cotrol spotify next"; \
     else \
         ${HOME}/bin/music-cotrol spotify next \
     fi
@@ -760,7 +760,7 @@ super + alt + ctrl + b
 # spotify: display status
 super + alt + ctrl + apostrophe
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "\${HOME}/bin/music-cotrol spotify status"; \
+        qvm-run personal "${HOME}/bin/music-cotrol spotify status"; \
     else \
         ${HOME}/bin/music-cotrol spotify status; \
     fi
