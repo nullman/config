@@ -545,41 +545,45 @@ super + shift + t
 super + shift + backslash
     ${HOME}/bin/set-x11-settings && notify-send --expire-time=3000 'X11 settings applied'
 
+# # nixos-rebuild switch
+# super + shift + r
+#     sudo -i nixos-rebuild switch | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
+
+#-------------------------------------------------------------------------------
+# Bluetooth Devices
+#-------------------------------------------------------------------------------
+
 # connect to headphones
 super + b
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "${HOME}/bin/system-setting connect headphones"; \
+        qvm-run personal "${HOME}/bin/system-setting bluetooth connect headphones"; \
     else \
-        ${HOME}/bin/system-setting connect headphones; \
+        ${HOME}/bin/system-setting bluetooth connect headphones; \
     fi
 
 # disconnect from headphones
 super + shift + b
     if [ "$(uname -n)" == "dom0" ]; then \
-    qvm-run personal "${HOME}/bin/system-setting disconnect headphones"; \
+    qvm-run personal "${HOME}/bin/system-setting bluetooth disconnect headphones"; \
     else \
-        ${HOME}/bin/system-setting disconnect headphones; \
+        ${HOME}/bin/system-setting bluetooth disconnect headphones; \
     fi
 
 # connect to earbuds
 super + n
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "${HOME}/bin/system-setting connect earbuds"; \
+        qvm-run personal "${HOME}/bin/system-setting bluetooth connect earbuds"; \
     else \
-        ${HOME}/bin/system-setting connect earbuds; \
+        ${HOME}/bin/system-setting bluetooth connect earbuds; \
     fi
 
 # disconnect from earbuds
 super + shift + n
     if [ "$(uname -n)" == "dom0" ]; then \
-        qvm-run personal "${HOME}/bin/system-setting disconnect earbuds"; \
+        qvm-run personal "${HOME}/bin/system-setting bluetooth disconnect earbuds"; \
     else \
-        ${HOME}/bin/system-setting disconnect earbuds; \
+        ${HOME}/bin/system-setting bluetooth disconnect earbuds; \
     fi
-
-# # nixos-rebuild switch
-# super + shift + r
-#     sudo -i nixos-rebuild switch | GDK_BACKEND=x11 yad --text-info --width=1024 --height=768 --wrap --no-buttons --fontname='MesloLGS Nerd Font Mono 14' --tail 2>/dev/null
 
 #-------------------------------------------------------------------------------
 # Media: mpc

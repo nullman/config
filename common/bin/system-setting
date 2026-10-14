@@ -12,10 +12,6 @@
 REPLACE_ID=$([ "${XDG_SESSION_TYPE}" == "wayland" ] || printf '%s' '--replace-id=1')
 EXPIRE_TIME="--expire-time=3000"        # 3 seconds
 
-if ! _command light; then
-    DISP=$(xrandr -q | sed -n 's/^\(.*\) connected primary .*$/\1/p')
-fi
-
 # check if executable command is found in the path
 _command() {
     command -v "$1" >/dev/null 2>&1
@@ -25,6 +21,10 @@ _command() {
 _run() {
     command -v "$1" >/dev/null 2>&1 && "$@"
 }
+
+if ! _command light; then
+    DISP=$(xrandr -q | sed -n 's/^\(.*\) connected primary .*$/\1/p')
+fi
 
 if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
     echo "Usage: $(basename \"$0\") SETTING CHANGE"

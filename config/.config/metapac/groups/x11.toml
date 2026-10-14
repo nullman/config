@@ -12,6 +12,7 @@ arch = {
     "xorg-setxkbmap",
     "xorg-xev",
     "xorg-xrandr",
+    "xprintidle",
     "xsel",
     "xterm",
   ]
@@ -35,6 +36,7 @@ dnf = {
     "xev",
     "xorg-x11-server-Xephyr",
     "xorg-x11-server-Xorg",
+    "xprintidle",
     "xrandr",
     "xsel",
     "xorg-x11-server-common",
