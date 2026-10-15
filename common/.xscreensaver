@@ -1,11 +1,11 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 6.15-1.fc44 for user on Thu Jul 23 12:36:00 2026.
+# Written by xscreensaver-settings 6.15 for user on Thu Oct 15 14:08:26 2026.
 # https://www.jwz.org/xscreensaver/
 
-timeout:	10:00:00
-cycle:		10:00:00
-lock:		False
-lockTimeout:	1:00:00
+timeout:	0:10:00
+cycle:		0:10:00
+lock:		True
+lockTimeout:	0:20:00
 passwdTimeout:	0:00:20
 visualID:	default
 installColormap:    True
@@ -37,7 +37,7 @@ textFile:	/usr/share/doc/xserver-common/copyright
 textProgram:	fortune
 textURL:	http://planet.debian.org/rss20.xml
 dialogTheme:	default
-settingsGeom:	0,0 0,0
+settingsGeom:	332,165 0,0
 
 programs:								      \
 		     "ATV4-2k" 	atv4-2k					    \n\
@@ -466,3 +466,4 @@ programs:								      \
 
 pointerHysteresis:  10
 authWarningSlack:   20
+
