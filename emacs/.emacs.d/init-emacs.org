@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-10-08 14:03 (user)>
+  #+TIMESTAMP: <2026-10-14 17:03 (user)>
 
 * Overview
   :PROPERTIES:
@@ -6364,12 +6364,12 @@
                               (easy-mark)
                               (buffer-substring-no-properties (region-beginning)
                                                               (region-end)))))
-                   (title
-                    (shell-command-to-string
-                     (concat
-                      "curl -s "
-                      (string-trim url)
-                      " | sed -n 's%.*<title>\(.*\)</title>.*%\1%p'"))))
+                   (cmd (concat
+                         "curl -s "
+                         "\"" (string-trim url) "\""
+                         " | sed -n 's|^.*<title>||p' | sed 's|</title>.*$||'"))
+                   (title (string-trim (shell-command-to-string cmd))))
+              ;;(message "%s" cmd)
               (beginning-of-line)
               (newline)
               (forward-line -1)

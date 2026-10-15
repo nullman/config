@@ -4225,12 +4225,12 @@ URL defaults to `easy-mark' at point."
                       (easy-mark)
                       (buffer-substring-no-properties (region-beginning)
                                                       (region-end)))))
-           (title
-            (shell-command-to-string
-             (concat
-              "curl -s "
-              (string-trim url)
-              " | sed -n 's%.*<title>\(.*\)</title>.*%\1%p'"))))
+           (cmd (concat
+                 "curl -s "
+                 "\"" (string-trim url) "\""
+                 " | sed -n 's|^.*<title>||p' | sed 's|</title>.*$||'"))
+           (title (string-trim (shell-command-to-string cmd))))
+      ;;(message "%s" cmd)
       (beginning-of-line)
       (newline)
       (forward-line -1)
