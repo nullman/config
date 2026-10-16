@@ -43,7 +43,7 @@ arch = {
     "graphviz",
     "guile",
     "htmlq",
-    "intellij-idea-community-edition",
+    "intellij-idea-oss",
     "ipython",
     "jq",
     "jre",
