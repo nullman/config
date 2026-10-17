@@ -242,37 +242,39 @@
                       :visible {music-info == "" ? "false" : "true"}
                       (button :onclick "mpc toggle" music-info))))
 
- (defwidget right-bar []
-            (box :class "right-bar"
-                 :orientation "h"
-                 :space-evenly "false"
-                 :halign "end"
-                 :spacing "10"
+(defwidget right-bar []
+           (box :class "right-bar"
+                :orientation "h"
+                :space-evenly "false"
+                :halign "end"
+                :spacing "10"
                 ;; weather
-                 (box :class "label"
-                      :tooltip weather-status
-                      (button :onclick "curl --silent 'wttr.in/San+Diego?uT' | head -n -2 | yad --text-info --width=1140 --height=840 --wrap --no-buttons 2>/dev/null"
-                              weather))
+                (box :class "label"
+                     :tooltip weather-status
+                     (button :onclick "curl --silent 'wttr.in/San+Diego?uT' | head -n -2 | yad --text-info --width=1140 --height=840 --wrap --no-buttons 2>/dev/null"
+                             weather))
                 ;; volume
-                 (volume :mute mute
-                         :volume volume)
+                ;; symbols: 󰝟 󰕾 󰝝 󰝞
+                (volume :mute mute
+                        :volume volume)
                 ;; brightness
-                 (metric :label ""
-                         :value {backlight == "" ? "" : brightness}
-                         :onchange "light -S {}"
-                         :tooltip "Brightness: ${brightness}%")
+                ;; symbols: 󰝬 󰝭 
+                (metric :label "󰝬"
+                        :value {backlight == "" ? "" : brightness}
+                        :onchange "light -S {}"
+                        :tooltip "Brightness: ${brightness}%")
                 ;; ram
-                ;; symbols:   󰍛
-                 (metric :label ""
-                         :value {EWW_RAM.used_mem_perc}
-                         :onchange ""
-                         :tooltip "RAM Used: ${round(EWW_RAM.used_mem_perc, 0)}%")
+                ;; symbols: 󰚗   󰍛
+                (metric :label "󰚗"
+                        :value {EWW_RAM.used_mem_perc}
+                        :onchange ""
+                        :tooltip "RAM Used: ${round(EWW_RAM.used_mem_perc, 0)}%")
                 ;; disk
-                ;; symbols: 󰆼 󰆼   󱘲  
-                 (metric :label "󰆼"
-                         :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-                         :onchange ""
-                         :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
+                ;; symbols: 󰆼 󰆼    󱘲 󰒋   ∕ 
+                (metric :label "󰆼"
+                        :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
+                        :onchange ""
+                        :tooltip "Disk Used: ${round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}%")
                 ;;;; systray
                 ;; (systray
                 ;;  :icon-size "14"
@@ -286,26 +288,26 @@
                 ;;              "${EWW_CMD} open systray --pos $(($(xdotool getmouselocation --shell | sed -n '/^X=/p' | sed 's/^X=//') - 10))x-30 && ${EWW_CMD} update systray-is-open=true"}
                 ;;              ""))
                 ;; battery
-                 (battery :status {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.status}
-                          :capacity {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.capacity})
+                (battery :status {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.status}
+                         :capacity {EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.capacity})
                 ;; wifi
-                 (wifi :status wifi-status
-                       :strength wifi-strength)
+                (wifi :status wifi-status
+                      :strength wifi-strength)
                 ;; bluetooth
-                 (bluetooth :status bt-status)
+                (bluetooth :status bt-status)
                 ;; temperature
                 ;; symbols:     
                 ;; time
-                 (clock :min min
-                        :time time)
+                (clock :min min
+                       :time time)
                 ;; session
-                 (box :class "label"
-                      :tooltip "Session Lock, Logout, Suspend, Hibernate, Reboot, or Shutdown"
+                (box :class "label"
+                     :tooltip "Session Lock, Logout, Suspend, Hibernate, Reboot, or Shutdown"
                      ;;(button :onclick "~/bin/rofi-session-menu -s & disown" "⏻"))))
-                      (button :onclick {session-is-open == "true" ?
-                              "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false" :
-                              "${EWW_CMD} open session && ${EWW_CMD} update session-is-open=true"}
-                              "⏻"))))
+                     (button :onclick {session-is-open == "true" ?
+                             "${EWW_CMD} close session && ${EWW_CMD} update session-is-open=false" :
+                             "${EWW_CMD} open session && ${EWW_CMD} update session-is-open=true"}
+                             "⏻"))))
 
  (defwidget bar []
             (centerbox :orientation "h"

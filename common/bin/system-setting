@@ -48,6 +48,7 @@ if [ $# -lt 2 ] || [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
 fi
 
 notify-send-volume() {
+    local volume=0
     if _command pamixer; then
         local volume=$(pamixer --get-volume)
     else
@@ -55,21 +56,15 @@ notify-send-volume() {
     fi
 
     case $1 in
-        mute)
-            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} \
-                 --icon="volume-$1" "Muted"
-           ;;
-
-        unmute)
-            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} \
-                 --hint=int:value:"${volume}" --icon="volume-$1" "Unmuted"
-           ;;
-
-        *)
-            _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} \
-                 --hint=int:value:"${volume}" --icon="volume-$1" "Volume $1"
-           ;;
+        mute)   local symbol="󰝟";;
+        unmute) local symbol="󰕾";;
+        up)     local symbol="󰶣";;
+        down)   local symbol="󰶡";;
     esac
+
+    _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} \
+         --hint=int:value:"${volume}" --icon="volume-$1" \
+         "Volume: ${volume}%  ${symbol}"
 }
 
 notify-send-brightness() {
@@ -79,8 +74,14 @@ notify-send-brightness() {
         local brightness=$(printf '%s * 50\n' "$(${HOME}/bin/set-x11-brightness ${DISP} +0 | sed -n 's/^Brightness: //p')" | bc | sed 's/\.[0-9]*$//')
     fi
 
+    case $1 in
+        up)   local symbol="󰶣";;
+        down) local symbol="󰶡";;
+    esac
+
     _run notify-send ${EXPIRE_TIME} ${REPLACE_ID} \
-         --hint=int:value:"${brightness}" --icon="brightness-$1" "Brightness $1"
+         --hint=int:value:"${brightness}" --icon="brightness-$1" \
+         "Brightness: ${brightness}%  ${symbol}"
 }
 
 case $1 in
@@ -209,12 +210,12 @@ case $1 in
                     headphones)
                         bluetoothctl power on; \
                             bluetoothctl connect 80:C3:BA:0E:CB:E5
-                        ;;
+                            ;;
 
                     earbuds)
                         bluetoothctl power on; \
                             bluetoothctl connect 80:C3:BA:89:8B:E9
-                        ;;
+                            ;;
                 esac
                 ;;
 
@@ -223,12 +224,12 @@ case $1 in
                     headphones)
                         bluetoothctl disconnect 80:C3:BA:0E:CB:E5; \
                             bluetoothctl power off
-                        ;;
+                            ;;
 
                     earbuds)
                         bluetoothctl disconnect 80:C3:BA:89:8B:E9; \
                             bluetoothctl power off
-                        ;;
+                            ;;
                 esac
                 ;;
         esac
