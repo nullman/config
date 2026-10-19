@@ -3172,8 +3172,10 @@ Output format:
 
 (init-message 3 "Org Mode: Functions: org-get-buffer-data")
 
-(defun org-get-buffer-data (buffer &optional path with-markers)
+(defun org-get-buffer-data (&optional buffer path with-markers)
   "Return tree structure version of given org BUFFER.
+
+BUFFER defaults to the current buffer.
 
 PATH is an optional list of headlines to match starting from the
 top level.
@@ -3222,6 +3224,7 @@ Output format if WITH-MARKERS is non-nil:
          (tree (cons nil nil))
          (start tree)
          (stack nil)
+         (buffer (or buffer (current-buffer)))
          (matches path)
          (path-level (length path)))
     (with-current-buffer buffer

@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-10-14 17:03 (user)>
+  #+TIMESTAMP: <2026-10-18 19:05 (user)>
 
 * Overview
   :PROPERTIES:
@@ -5162,8 +5162,10 @@
 
         (init-message 3 "Org Mode: Functions: org-get-buffer-data")
 
-        (defun org-get-buffer-data (buffer &optional path with-markers)
+        (defun org-get-buffer-data (&optional buffer path with-markers)
           "Return tree structure version of given org BUFFER.
+
+        BUFFER defaults to the current buffer.
 
         PATH is an optional list of headlines to match starting from the
         top level.
@@ -5212,6 +5214,7 @@
                  (tree (cons nil nil))
                  (start tree)
                  (stack nil)
+                 (buffer (or buffer (current-buffer)))
                  (matches path)
                  (path-level (length path)))
             (with-current-buffer buffer
