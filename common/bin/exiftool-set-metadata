@@ -38,7 +38,8 @@ _process() {
 
     if $(file "${file}" | grep -iq " media "); then
         local title=$(echo "${file}" | sed 's/ ([[:digit:]]\{4\})//; s/\.[^.]*$//')
-        echo "${title}" | grep -q ", The" && title=$(echo "${title}" | sed 's/, The//; s/^/The /')
+        echo "${title}" | grep -q ", A[ :]" && title=$(echo "${title}" | sed 's/, A//; s/^/A /')
+        echo "${title}" | grep -q ", The[ :]" && title=$(echo "${title}" | sed 's/, The//; s/^/The /')
         exiftool -all= -overwrite_original_in_place -title="${title}" "${file}"
     fi
 }
