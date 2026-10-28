@@ -18,6 +18,7 @@ screen -t shell 6 ${SHELL}
 screen -t shell 7 ${SHELL}
 screen -t shell 8 ${SHELL}
 screen -t shell 9 ${SHELL}
+screen -t nvmon 10 nvtop
 screen -t calculator 19 orpie
 screen -t spell 20 ispell -a
 
