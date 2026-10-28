@@ -25,7 +25,6 @@ dnf = {
   ], 
   packages = [
     "akmod-nvidia-580xx",
-    "nvtop",
     "xorg-x11-drv-nvidia-580xx",
     "xorg-x11-drv-nvidia-580xx-cuda",
     "egl-wayland",
