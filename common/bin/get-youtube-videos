@@ -13,7 +13,10 @@ ytdlp="$(command -v yt-dlp)"
 #ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 channels=(
-    "Commercial           | arwuns                                       | https://www.youtube.com/@arwuns/videos"
+    "Commercial           | arwuns > Retro TV Commercials                | https://www.youtube.com/playlist?list=PLYumrCRePE55iL6Fw0GqftfdOgqtESiPv"
+    "Commercial           | arwuns > 80s TV Commercials                  | https://www.youtube.com/playlist?list=PLYumrCRePE56C20hSuXznEpfvcWWdbDzl"
+    "Commercial           | arwuns > 90s TV Commercials                  | https://www.youtube.com/playlist?list=PLYumrCRePE56SCfIYojVGLQAHxDt718UO"
+    "Commercial           | arwuns > 2000s TV Commercials                | https://www.youtube.com/playlist?list=PLYumrCRePE57sGoPoRY14Xdcr9R9DTQpE"
     "Commercial           | Nostalgic X'er                               | https://www.youtube.com/@NostalgicXer-dd3kx/videos"
 #?    "Computer/Demo        | Commodore 64 Demos                           | https://www.youtube.com/playlist?list=PLnmLOQIDmUvVn43FHdakSTY_W_EuoVwnT"
 #?    "Computer/Demo        | Commodore Amiga Demos                        | https://www.youtube.com/playlist?list=PLnmLOQIDmUvUgbvY-Jq0txuYWYgWVcOOS"
@@ -259,7 +262,7 @@ _download() {
             cmd="${ytdlp} \
                 --preset-alias sleep \
                 --cookies-from-browser firefox \
-                --format-sort 'res:1080,vcodec:avc,acodec:m4a' \
+                --format-sort 'res:720,vcodec:avc,acodec:m4a' \
                 --playlist-reverse \
                 --write-description \
                 ${archive} \
