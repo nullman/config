@@ -266,11 +266,16 @@ window-rule {
 }
 
 window-rule {
-    match app-id="Gimp-2.10"
     match app-id="mplayer2"
     match app-id="Qmmp"
     match app-id="spotify"
     default-column-width { proportion 0.5; }
+    open-on-workspace "video"
+}
+
+window-rule {
+    match app-id="Gimp-2.10"
+    default-column-width { proportion 1.0; }
     open-on-workspace "video"
 }
 
