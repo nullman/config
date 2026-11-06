@@ -44,7 +44,7 @@ dozer = ["base", "base-wm", "system", "wayland", "wm", "fonts", "applications", 
 fedora = ["qubes", "fedora", "system", "x11", "wm", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "ai", "fortune", "games"]
 mouse = ["base", "base-wm", "system", "wayland", "wm", "fonts", "emulators", "fortune", "minimal"]
 #retro = ["base", "base-wm", "system", "x11", "wm", "fonts", "emulators"]
-switch = ["base", "base-wm", "system", "x11", "wm", "fonts", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "fortune", "minimal"]
+switch = ["base", "base-wm", "system", "x11", "wm", "fonts", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "fortune"]
 tank = ["fedora-gnome", "flatpak", "snap", "base", "base-wm", "system", "wayland", "wm", "fonts", "applications", "utilities", "tui", "console", "console-hacks", "internet", "emulators", "virtual", "containers", "development", "ai", "games", "nvidia580"]
 
 [arch]
