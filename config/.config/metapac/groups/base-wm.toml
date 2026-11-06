@@ -46,6 +46,7 @@ arch = {
     "xorg-xkill",
     "xorg-xmodmap",
     "xorg-xprop",
+    "xorg-xrandr",
     "xorg-xset",
     "xorg-xwininfo",
     "xscreensaver",
