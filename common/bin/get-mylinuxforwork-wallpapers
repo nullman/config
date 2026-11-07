@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#===============================================================================
+# get-mylinuxforwork-wallpapers
+#
+# Get images from MyLinuxForWork's wallpaper collection.
+#
+# Reference: https://github.com/mylinuxforwork/wallpaper
+#
+# Author: Kyle W T Sherman <kylewsherman@gmail.com>
+#===============================================================================
+
+giturl="https://github.com/mylinuxforwork/wallpaper.git"
+gitdir="${HOME}/src/mylinuxforwork"
+outdir="/home/data/media/Graphic/Backgrounds/MyLinuxForWork"
+
+(
+    mkdir -p "${HOME}/src"
+    git clone --depth=1 "${giturl}" "${gitdir}"
+    cd "${gitdir}"
+    git checkout
+
+    mkdir -p "${outdir}"
+    cp -rp *.png "${outdir}/"
+    cp -rp *.jpg "${outdir}/"
+)
+
+#===============================================================================
+# End of File
+#===============================================================================
