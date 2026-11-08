@@ -81,6 +81,7 @@ arch = {
     "vscodium",
     "yq",
     "zlib",
+    "zig",
   ]
 }
 
@@ -143,6 +144,7 @@ dnf = {
     "texlive-fontawesome",
     "tokei",
     "yq",
+    "zig",
     "cairo-devel",
     "compat-guile18",
     "glib2-devel",
