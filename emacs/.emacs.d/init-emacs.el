@@ -2320,13 +2320,15 @@ KEYMAP defaults to `override-global-map'."
               :menu-name "Fill-Column Commands"
               ("d" . fill-column-default)
               ("w" . fill-column-width)
+              ("1" . fill-column-10)
+              ("5" . fill-column-15)
               ("2" . fill-column-20)
               ("3" . fill-column-30)
               ("4" . fill-column-40)
               ("6" . fill-column-60)
               ("7" . fill-column-78)
               ("8" . fill-column-80)
-              ("1" . fill-column-100))
+              ("0" . fill-column-100))
 
   ;; miscellaneous pretty-print commands
   (bind-keys* :map space-miscellaneous-map
@@ -11671,6 +11673,8 @@ If BUFFER is nil, use `current-buffer'."
 
 (generate-fill-column-width 78)
 (defalias 'fill-column-default #'fill-column-78)
+(generate-fill-column-width 10)
+(generate-fill-column-width 15)
 (generate-fill-column-width 20)
 (generate-fill-column-width 30)
 (generate-fill-column-width 40)
