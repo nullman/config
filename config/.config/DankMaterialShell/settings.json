@@ -309,6 +309,7 @@
       "showOnLastDisplay": true,
       "position": 1,
       "mode": "compact",
+      "middleClickAction": "close",
       "taskbarAlign": "center",
       "widgetExpansion": "popout",
       "iconSize": 40,
@@ -372,5 +373,6 @@
   ],
   "dmsWindowsFloatingSeeded": [
     "niri"
-  ]
+  ],
+  "keyboardOptions": "shift:both_capslock,caps:ctrl_modifier"
 }
