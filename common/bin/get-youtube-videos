@@ -70,7 +70,7 @@ channels=(
 #?    "Computer/General     | Chris Titus Tech                             | https://www.youtube.com/c/ChrisTitusTech/videos"
 #?    "Computer/General     | Titus Tech Talk                              | https://www.youtube.com/@TitusTechTalk/videos"
 #?    "Computer/General     | Craft Computing                              | https://www.youtube.com/@CraftComputing/videos"
-    "Computer/General     | Dave's Garage                                | https://www.youtube.com/c/DavesGarage/videos"
+#?    "Computer/General     | Dave's Garage                                | https://www.youtube.com/c/DavesGarage/videos"
 #?    "Computer/General     | DistroTube                                   | https://www.youtube.com/c/DistroTube/videos"
 #?    "Computer/General     | ETA Prime                                    | https://www.youtube.com/c/ETAPRIME/videos"
 #?    "Computer/General     | ExplainingComputers                          | https://www.youtube.com/c/explainingcomputers/videos"
