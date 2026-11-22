@@ -1,6 +1,7 @@
 arch = {
   packages = [
     "chatbox-bin",
+    "handy-bin",
     "herdr-bin",
     "ollama",
     "ollama-docs",

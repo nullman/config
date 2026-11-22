@@ -74,6 +74,7 @@ arch = {
     "texlive-bin",
     "texlive-fontsextra",
     "texlive-fontsrecommended",
+    "texlive-games",
     "texlive-latexextra",
     "texlive-plaingeneric",
     "texlive-pictures",
