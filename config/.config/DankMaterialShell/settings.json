@@ -180,7 +180,7 @@
   "fontScale": 1.2,
   "acLockTimeout": 3600,
   "acProfileName": "2",
-  "acPostLockMonitorTimeout": 60,
+  "acPostLockMonitorTimeout": 10800,
   "batteryLockTimeout": 1200,
   "batterySuspendTimeout": 1800,
   "batteryProfileName": "0",
