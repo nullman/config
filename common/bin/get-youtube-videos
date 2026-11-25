@@ -9,8 +9,8 @@
 
 basedir="/mnt/synology/video"
 #basedir="${HOME}/synology/video"
-#ytdlp="$(command -v yt-dlp)"
-ytdlp="${HOME}/src/yt-dlp/yt-dlp"
+ytdlp="$(command -v yt-dlp)"
+#ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 channels=(
     "Commercial           | arwuns > Retro TV Commercials                | https://www.youtube.com/playlist?list=PLYumrCRePE55iL6Fw0GqftfdOgqtESiPv"
