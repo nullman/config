@@ -416,10 +416,10 @@ fetch() {
         echo "| ${name} | ${url} |"
         if [[ -z $(find "${dir}" -name "${escname}\.*") ]]; then
             cmd="${ytdlp} \
-            --sleep-requests 0.8 \
+            --sleep-subtitles \$((4 + RANDOM % 3)) \
+            --sleep-requests 0.\$((6 + RANDOM % 5)) \
             --sleep-interval \$((8 + RANDOM % 5)) \
             --max-sleep-interval \$((18 + RANDOM % 5)) \
-            --sleep-subtitles \$((4 + RANDOM % 3)) \
             --cookies-from-browser firefox \
             --format 'bv*+ba/b' \
             --format-sort 'res:1080,vcodec:avc1,acodec:mp4a' \

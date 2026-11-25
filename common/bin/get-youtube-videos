@@ -9,8 +9,8 @@
 
 basedir="/mnt/synology/video"
 #basedir="${HOME}/synology/video"
-ytdlp="$(command -v yt-dlp)"
-#ytdlp="${HOME}/src/yt-dlp/yt-dlp"
+#ytdlp="$(command -v yt-dlp)"
+ytdlp="${HOME}/src/yt-dlp/yt-dlp"
 
 channels=(
     "Commercial           | arwuns > Retro TV Commercials                | https://www.youtube.com/playlist?list=PLYumrCRePE55iL6Fw0GqftfdOgqtESiPv"
@@ -262,7 +262,10 @@ _download() {
         if [ -z "${listname}" ] || [ "${name}" == "${listname}" ]; then
             path="${basedir}/${dir}/${name}"
             cmd="${ytdlp} \
-                --preset-alias sleep \
+                --sleep-subtitles \$((4 + RANDOM % 3)) \
+                --sleep-requests 0.\$((6 + RANDOM % 5)) \
+                --sleep-interval \$((8 + RANDOM % 5)) \
+                --max-sleep-interval \$((18 + RANDOM % 5)) \
                 --cookies-from-browser firefox \
                 --format-sort 'res:720,vcodec:avc,acodec:m4a' \
                 --playlist-reverse \
@@ -272,6 +275,7 @@ _download() {
                 --paths \"home:${path}\" \
                 --output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.%(ext)s\" \
                 '${url}'"
+                #--preset-alias sleep \
                 #--format-sort 'res:1080,vcodec:h264,acodec:m4a' \
                 #--format 'bestvideo[height<=1080]+bestaudio/best[height<=1080]' \
                 #--cookies-from-browser brave+gnomekeyring \
@@ -279,10 +283,6 @@ _download() {
                 # mkv
                 #--format 'h264+aac' \
                 #--output \"${name} - %(release_date>%Y-%m-%d,upload_date>%Y-%m-%d|Unknown)s - %(title)s.mp4\" \
-                #--sleep-requests 0.75
-                #--sleep-interval 10
-                #--max-sleep-interval 20
-                #--sleep-subtitles 5
             echo
             echo "${url} -> ${path}"
             echo
