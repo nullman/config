@@ -12002,24 +12002,28 @@ be automatically capitalized."
            "in accordance with" "in addition to" "in case of" "in front of"
            "in lieu of" "in order to" "in place of" "in point of"
            "in spite of" "on account of" "on behalf of" "on top of"
-           "with regard to" "with respect to" "with a view to")))
+           "with regard to" "with respect to" "with a view to"))
+        (words-abbreviations
+         '(;; abbreviations (words with periods)
+           "e.g." "etc." "i.e." "vs.")))
     (let ((words-short-regexp (regexp-opt (mapcar #'capitalize words-short) 'words))
           (words-single-regexp (regexp-opt (mapcar #'capitalize words-single) 'words))
           (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
           (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
-          (abbreviation-word-regexp (rx word-boundary
-                                        (any digit upper)
-                                        (one-or-more (any "." digit upper))
-                                        (zero-or-more (not space))
-                                        word-boundary))
-          (mixed-word-regexp (rx word-boundary
-                                 (zero-or-more upper)
-                                 (zero-or-more digit)
-                                 (one-or-more lower)
-                                 (zero-or-more digit)
+          (abbreviation-word-regexp (rx (or (seq word-start
+                                                 (one-or-more
+                                                  (seq (any upper digit)
+                                                       (optional ".")
+                                                       (optional (seq (any digit upper)
+                                                                      (optional ".")))))
+                                                 word-end)
+                                            (regexp (regexp-opt words-abbreviations)))))
+          (mixed-word-regexp (rx word-start
+                                 (zero-or-more (any upper digit))
+                                 (one-or-more (any lower digit))
                                  (one-or-more upper)
                                  (zero-or-more (not space))
-                                 word-boundary))
+                                 word-end))
           (file-extension-word-regexp (rx "."
                                           (one-or-more (not space))
                                           eos))
@@ -12050,36 +12054,36 @@ be automatically capitalized."
                                          (one-or-more space))))))
       (cl-labels
           ((get-fixed (string regexp)
-                      (let ((case-fold-search nil)
-                            (pos 0)
-                            fixed)
-                        (while (string-match regexp string pos)
-                          (push (list (match-beginning 0)
-                                      (match-end 0)
-                                      (match-string 0 string))
-                                fixed)
-                          (setq pos (match-end 0)))
-                        (nreverse fixed)))
+             (let ((case-fold-search nil)
+                   (pos 0)
+                   fixed)
+               (while (string-match regexp string pos)
+                 (push (list (match-beginning 0)
+                             (match-end 0)
+                             (match-string 0 string))
+                       fixed)
+                 (setq pos (match-end 0)))
+               (nreverse fixed)))
            (set-fixed (string fixed)
-                      (let ((string string))
-                        (dolist (a fixed)
-                          (setq string
-                                (concat (substring string 0 (car a))
-                                        (caddr a)
-                                        (substring string (cadr a)))))
-                        string))
+             (let ((string string))
+               (dolist (a fixed)
+                 (setq string
+                       (concat (substring string 0 (car a))
+                               (caddr a)
+                               (substring string (cadr a)))))
+               string))
            (cap (string)
-                (if cmos
-                    (replace-regexp-in-string
-                     words-single-regexp 'downcase
-                     (replace-regexp-in-string
-                      words-double-regexp 'downcase
-                      (replace-regexp-in-string
-                       words-triple-regexp 'downcase
-                       (capitalize string) t t) t t) t t)
+             (if cmos
+                 (replace-regexp-in-string
+                  words-single-regexp 'downcase
                   (replace-regexp-in-string
-                   words-short-regexp 'downcase
-                   (capitalize string) t t))))
+                   words-double-regexp 'downcase
+                   (replace-regexp-in-string
+                    words-triple-regexp 'downcase
+                    (capitalize string) t t) t t) t t)
+               (replace-regexp-in-string
+                words-short-regexp 'downcase
+                (capitalize string) t t))))
         (let* ((extension (get-fixed string file-extension-word-regexp))
                (string (if extension
                            (substring string 0 (caar extension))
