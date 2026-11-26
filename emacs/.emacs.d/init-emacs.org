@@ -9,7 +9,7 @@
   #+PROPERTY: header-args :noweb no :tangle yes :padline yes :comments link :results silent :mkdirp yes
   #+OPTIONS: num:nil toc:nil d:(HIDE) tags:not-in-toc html-preamble:nil html-postamble:nil
   #+STARTUP: noindent odd overview
-  #+TIMESTAMP: <2026-11-24 21:35 (user)>
+  #+TIMESTAMP: <2026-11-25 16:27 (user)>
 
 * Overview
   :PROPERTIES:
@@ -17708,11 +17708,17 @@
                   (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
                   (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
                   (abbreviation-word-regexp (rx (or (seq word-start
-                                                         (one-or-more
+                                                         (or
+                                                          ;; (one-or-more
+                                                          ;;     (seq (any upper digit)
+                                                          ;;          (optional ".")
+                                                          ;;          (optional (seq (any digit upper)
+                                                          ;;                         (optional ".")))))
+                                                          (seq (any upper digit) ".")
                                                           (seq (any upper digit)
                                                                (optional ".")
-                                                               (optional (seq (any digit upper)
-                                                                              (optional ".")))))
+                                                               (one-or-more (seq (any upper digit)
+                                                                                 (optional ".")))))
                                                          word-end)
                                                     (regexp (regexp-opt words-abbreviations)))))
                   (mixed-word-regexp (rx word-start

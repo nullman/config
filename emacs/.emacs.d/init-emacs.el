@@ -12011,11 +12011,17 @@ be automatically capitalized."
           (words-double-regexp (regexp-opt (mapcar #'capitalize words-double) 'words))
           (words-triple-regexp (regexp-opt (mapcar #'capitalize words-triple) 'words))
           (abbreviation-word-regexp (rx (or (seq word-start
-                                                 (one-or-more
+                                                 (or
+                                                  ;; (one-or-more
+                                                  ;;     (seq (any upper digit)
+                                                  ;;          (optional ".")
+                                                  ;;          (optional (seq (any digit upper)
+                                                  ;;                         (optional ".")))))
+                                                  (seq (any upper digit) ".")
                                                   (seq (any upper digit)
                                                        (optional ".")
-                                                       (optional (seq (any digit upper)
-                                                                      (optional ".")))))
+                                                       (one-or-more (seq (any upper digit)
+                                                                         (optional ".")))))
                                                  word-end)
                                             (regexp (regexp-opt words-abbreviations)))))
           (mixed-word-regexp (rx word-start
